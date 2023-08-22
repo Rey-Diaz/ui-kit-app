@@ -1,18 +1,21 @@
+// TableComponent.js
 import React from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import config from '../config.json';
 
 const TableComponent = () => {
-  const products = config.dummyData.products;
+    const data = config.dummyData.dataPoints;
 
-  return (
-    <DataTable value={products}>
-      <Column field="name" header="Name"></Column>
-      <Column field="sales" header="Sales"></Column>
-      <Column field="inventory" header="Inventory"></Column>
-    </DataTable>
-  );
+    return (
+        <div className="data-table">
+            <h2>Data Table</h2>
+            <DataTable value={data}>
+                <Column field="time" header="Time" />
+                <Column field="weight" header="Weight" />
+            </DataTable>
+        </div>
+    );
 };
 
 export default TableComponent;
