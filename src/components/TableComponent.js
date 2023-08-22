@@ -1,21 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { ProductService } from '../services/ProductService';
+import config from '../config.json';
 
-export const TableComponent = () => {
-    const [products, setProducts] = useState([]);
-    const productService = new ProductService();
+const TableComponent = () => {
+  const products = config.dummyData.products;
 
-    useEffect(() => {
-        productService.getProductsSmall().then(data => setProducts(data));
-    }, []);
+  return (
+    <DataTable value={products}>
+      <Column field="name" header="Name"></Column>
+      <Column field="sales" header="Sales"></Column>
+      <Column field="inventory" header="Inventory"></Column>
+    </DataTable>
+  );
+};
 
-    return (
-        <DataTable value={products}>
-            <Column field="name" header="Name"></Column>
-            <Column field="sales" header="Sales"></Column>
-            <Column field="inventory" header="Inventory"></Column>
-        </DataTable>
-    );
-}
+export default TableComponent;

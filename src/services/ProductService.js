@@ -1,14 +1,24 @@
 import axios from 'axios';
-import config from '../config.json';
+import config from '../config.json';  // Adjust the path based on where your config.json is located
 
-export class ProductService {
-    baseUrl = config.api.baseUrl + "/products";
+class ProductService {
+    static apiBaseUrl = config.apiBaseUrl;
 
-    getProductsSmall() {
-        // If you want to use the real API:
-        //return axios.get(`${this.baseUrl}/small`).then(res => res.data);
+    // Fetch products from the API
+    static async fetchProductsFromAPI() {
+        try {
+            const response = await axios.get(`${this.apiBaseUrl}/products`);  // Assuming the endpoint is /products
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching products from API:', error);
+            throw error;
+        }
+    }
 
-        // If you want to use dummy data:
-        return Promise.resolve(config.dummyData.products);
+    // Get dummy products from config
+    static getDummyProducts() {
+        return config.dummyData.products;
     }
 }
+
+export default ProductService;

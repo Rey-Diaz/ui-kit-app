@@ -1,18 +1,16 @@
 {
-    "apiBaseUrl": "https://api.example.com",
-    "dummyData": {
-      "products": [
-        {
-          "name": "Product A",
-          "sales": 100,
-          "inventory": 50
-        },
-        {
-          "name": "Product B",
-          "sales": 150,
-          "inventory": 30
-        }
-      ]
-    }
+  "dummyData": {
+    "products": [
+      {
+        "name": "Product A",
+        "sales": 100,
+        "inventory": 50
+      },
+      {
+        "name": "Product B",
+        "sales": 150,
+        "inventory": 30
+      }
+    ]
   }
-  
+}
