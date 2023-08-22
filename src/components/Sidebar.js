@@ -9,6 +9,7 @@ function Sidebar() {
       <button onClick={() => setIsOpen(!isOpen)}>Hamburger Icon</button>
       {isOpen && (
         <div className="sidebar">
+          <Link to="/">Home</Link>
           <Link to="/signup">Sign Up</Link>
           <Link to="/profile">Profile</Link>
           <Link to="/dashboard">Dashboard</Link>
