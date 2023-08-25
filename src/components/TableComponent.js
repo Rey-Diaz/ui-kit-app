@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
+// TableComponent.js
+import React from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { ProductService } from '../services/ProductService';
+import config from '../config.json';
 
-export const TableComponent = () => {
-    const [products, setProducts] = useState([]);
-    const productService = new ProductService();
-
-    useEffect(() => {
-        productService.getProductsSmall().then(data => setProducts(data));
-    }, []);
+const TableComponent = () => {
+    const data = config.dummyData.dataPoints;
 
     return (
-        <DataTable value={products}>
-            <Column field="name" header="Name"></Column>
-            <Column field="sales" header="Sales"></Column>
-            <Column field="inventory" header="Inventory"></Column>
-        </DataTable>
+        <div className="data-table">
+            <h2>Data Table</h2>
+            <DataTable value={data} rowStyle={{ marginBottom: '10px' }}>
+                <Column field="time" header="Time" style={{borderRight: '1px solid #d1d1d1', paddingRight: '15px', paddingLeft: '15px'}} bodyStyle={{borderRight: '1px solid #d1d1d1', paddingRight: '15px', paddingLeft: '15px'}} />
+                <Column field="weight" header="Weight" style={{paddingRight: '15px', paddingLeft: '15px'}} bodyStyle={{paddingRight: '15px', paddingLeft: '15px'}} />
+            </DataTable>
+        </div>
     );
-}
+};
+
+export default TableComponent;

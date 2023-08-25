@@ -1,21 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Sidebar() {
-  const [isOpen, setIsOpen] = useState(false);
+function Sidebar({ open, onClose }) {
+  if (!open) return null;
 
   return (
-    <div>
-      <button onClick={() => setIsOpen(!isOpen)}>Hamburger Icon</button>
-      {isOpen && (
-        <div className="sidebar">
-          <Link to="/">Home</Link>
-          <Link to="/signup">Sign Up</Link>
-          <Link to="/profile">Profile</Link>
-          <Link to="/dashboard">Dashboard</Link>
-          <Link to="/chat">Chat</Link>
-        </div>
-      )}
+    <div className="fixed top-0 left-0 h-full w-64 bg-gray-800 text-white p-6 z-50">
+      <button onClick={onClose}>✕</button>
+      <ul>
+        <li><Link to="/" onClick={onClose}>Home</Link></li>
+        <li><Link to="/signup" onClick={onClose}>Sign Up</Link></li>
+        <li><Link to="/profile" onClick={onClose}>Profile</Link></li>
+        <li><Link to="/Dashboard" onClick={onClose}>Dashboard</Link></li>
+        <li><Link to="/chat" onClick={onClose}>Chat</Link></li>
+      </ul>
     </div>
   );
 }
