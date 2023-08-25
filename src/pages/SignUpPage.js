@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
+import Navbar from '../components/Navbar';
+import SignupForm from '../components/SignupForm';
+import TermsAndConditionsCard from '../components/TermsAndConditionsCard';
+import Footer from '../components/Footer';
 
 function SignUpPage() {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     name: '',
     email: '',
     phoneNumber: '',
+    password: '',
+    confirmPassword: '',
     termsAccepted: false,
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
+  const [errors, setErrors] = useState({});
+  const [showTermsModal, setShowTermsModal] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -16,50 +26,58 @@ function SignUpPage() {
     }));
   };
 
+  const validate = () => {
+    const newErrors = {};
+
+    if (!formData.name.trim()) newErrors.name = 'Name is required.';
+    if (!formData.email.trim()) newErrors.email = 'Email is required.';
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Email is invalid.';
+    if (!formData.phoneNumber.trim()) newErrors.phoneNumber = 'Phone number is required.';
+    if (!formData.password.trim()) newErrors.password = 'Password is required.';
+    if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match.';
+    if (!formData.termsAccepted) newErrors.termsAccepted = 'You must accept the terms and conditions to sign up.';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
+    if (validate()) {
+      // Handle form submission logic here
+    }
+  };
+
+  const handleShowTerms = () => {
+    setShowTermsModal(true);
+  };
+
+  const handleCloseTermsModal = () => {
+    setShowTermsModal(false);
   };
 
   return (
-    <div className="container mx-auto mt-10">
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md">
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="John Doe"
-          />
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <div className="container mx-auto mt-10">
+        <SignupForm
+          formData={formData}
+          errors={errors}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          onShowTerms={handleShowTerms}
+        />
+      </div>
+      {showTermsModal && (
+        <div className="fixed inset-0 flex items-center justify-center z-10">
+          <div className="fixed inset-0 bg-gray-800 opacity-50"></div>
+          <div className="bg-white p-6 rounded shadow-md z-20 max-w-md w-full">
+            <TermsAndConditionsCard onClose={handleCloseTermsModal} />
+          </div>
         </div>
-        {/* ... Similar blocks for email, phone number, and other fields */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="terms">
-            Accept Terms and Conditions
-          </label>
-          <input
-            type="checkbox"
-            id="terms"
-            name="termsAccepted"
-            checked={formData.termsAccepted}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex items-center justify-between">
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Sign Up
-          </button>
-        </div>
-      </form>
+      )}
+      <div className="flex-grow"></div> {/* Spacer */}
+      <Footer />
     </div>
   );
 }

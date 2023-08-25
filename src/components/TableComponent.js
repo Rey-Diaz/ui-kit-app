@@ -10,9 +10,9 @@ const TableComponent = () => {
     return (
         <div className="data-table">
             <h2>Data Table</h2>
-            <DataTable value={data}>
-                <Column field="time" header="Time" />
-                <Column field="weight" header="Weight" />
+            <DataTable value={data} rowStyle={{ marginBottom: '10px' }}>
+                <Column field="time" header="Time" style={{borderRight: '1px solid #d1d1d1', paddingRight: '15px', paddingLeft: '15px'}} bodyStyle={{borderRight: '1px solid #d1d1d1', paddingRight: '15px', paddingLeft: '15px'}} />
+                <Column field="weight" header="Weight" style={{paddingRight: '15px', paddingLeft: '15px'}} bodyStyle={{paddingRight: '15px', paddingLeft: '15px'}} />
             </DataTable>
         </div>
     );

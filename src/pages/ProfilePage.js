@@ -1,39 +1,38 @@
 import React, { useState } from 'react';
+import Navbar from '../components/Navbar';
+import ViewProfile from '../components/ViewProfile';
+import EditProfile from '../components/EditProfile';
+import Footer from '../components/Footer';
 
 function ProfilePage() {
-  // Assuming user data is fetched from some source, using useState for demonstration
+  const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState({
     name: 'John Doe',
     email: 'john@example.com',
     phoneNumber: '123-456-7890',
+    // ... other fields if needed
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUserData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const handleEditClick = () => {
+    setIsEditing(true);
   };
 
-  const handleUpdate = (e) => {
-    e.preventDefault();
-    // Handle update logic here
+  const handleSubmit = (updatedData) => {
+    setUserData(updatedData);
+    setIsEditing(false);
   };
 
   return (
-    <div className="container mx-auto mt-10">
-      <form onSubmit={handleUpdate} className="bg-white p-6 rounded shadow-md">
-        {/* ... Similar input blocks for name, email, phone number as in SignUpPage */}
-        <div className="flex items-center justify-between">
-          <button
-            type="submit"
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Update Profile
-          </button>
-        </div>
-      </form>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <div className="container mx-auto mt-10 p-4 md:w-1/2 bg-white shadow-md rounded-lg flex-grow">
+        {isEditing ? (
+          <EditProfile data={userData} setData={setUserData} onSubmit={handleSubmit} />
+        ) : (
+          <ViewProfile data={userData} onEdit={handleEditClick} />
+        )}
+      </div>
+      <Footer />
     </div>
   );
 }
